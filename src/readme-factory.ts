@@ -341,7 +341,9 @@ class Builder {
         return `&lt;${typeName}${param.isArray ? '[]' : ''}&gt;`;
       }
     } else {
-      return `[&lt;${typeName}${param.isArray ? '[]' : ''}&gt;](${anchor(typeName)})`;
+      return `[&lt;${typeName}${param.isArray ? '[]' : ''}&gt;](${anchor(
+        typeName,
+      )})`;
     }
   }
 
