@@ -14,6 +14,10 @@ About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#rea
 
 # Widget Service
 
+First paragraph of a multi-paragraph description
+
+Second paragraph of a multi-paragraph description
+
 - Methods
   - [createWidget](#createwidget)
   - [deleteWidgetFoo](#deletewidgetfoo)

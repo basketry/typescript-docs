@@ -154,6 +154,7 @@ class Builder {
     yield '';
     yield `# ${title(buildInterfaceName(int))}`;
     yield '';
+    yield* this.buildInterfaceDescription(int);
     yield* this.buildToc(int);
     yield '';
 
@@ -347,6 +348,20 @@ class Builder {
     }
   }
 
+  private *buildInterfaceDescription(int: Interface): Iterable<string> {
+    if (int.description) {
+      if (Array.isArray(int.description)) {
+        for (const para of int.description) {
+          yield para.value;
+          yield '';
+        }
+      } else {
+        yield int.description.value;
+        yield '';
+      }
+    }
+  }
+
   private buildParameterDescription(param: Parameter | Property): string {
     if (!param.description) return '';
 
@@ -404,8 +419,8 @@ class Builder {
     if (e.values.length) {
       yield '';
       for (const value of e.values) {
-        const valueDescription = valueDescriptions?.[value.value];
-        yield `- \`${value.value}\`${
+        const valueDescription = valueDescriptions?.[value.content.value];
+        yield `- \`${value.content.value}\`${
           valueDescription ? ` - ${valueDescription}` : ''
         }`;
       }
