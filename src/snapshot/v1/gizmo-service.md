@@ -14,6 +14,8 @@ About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#rea
 
 # Gizmo Service
 
+Single paragraph description
+
 - Methods
   - [createGizmo](#creategizmo)
   - [getGizmos](#getgizmos)
