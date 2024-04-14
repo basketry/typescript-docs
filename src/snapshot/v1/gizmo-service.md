@@ -20,6 +20,7 @@ Single paragraph description
   - [createGizmo](#creategizmo)
   - [getGizmos](#getgizmos)
   - [updateGizmo](#updategizmo)
+  - [uploadGizmo](#uploadgizmo)
 - Types
   - [Gizmo](#gizmo)
   - [GizmosResponse](#gizmosresponse)
@@ -61,6 +62,12 @@ Only has a summary
   - Must match pattern: `[0-9a-fA-F]+`
 
 Returns: [&lt;Gizmo&gt;](#gizmo)
+
+### uploadGizmo
+
+`uploadGizmo({data})`
+
+- `data` &lt;Blob&gt;
 
 ## Types
 
