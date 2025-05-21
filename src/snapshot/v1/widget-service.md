@@ -8,7 +8,7 @@ To make changes to the contents of this file:
 1. Edit source/path.ext
 2. Run the Basketry CLI
 
-About Basketry: https://github.com/basketry/basketry/wiki
+About Basketry: https://basketry.io
 About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#readme
 --->
 
@@ -27,6 +27,7 @@ Second paragraph of a multi-paragraph description
 - Types
   - [CreateWidgetBody](#createwidgetbody)
   - [Widget](#widget)
+  - [WidgetData](#widgetdata)
   - [WidgetFoo](#widgetfoo)
 - Enums
   - [ProductSize](#productsize)
@@ -90,6 +91,11 @@ Returns: [&lt;Widget&gt;](#widget)
   - Must be a multiple of `15`
 - `foo` [&lt;WidgetFoo&gt;](#widgetfoo) (optional)
 - `size` [&lt;ProductSize&gt;](#productsize) (optional)
+- `data` [&lt;WidgetData&gt;](#widgetdata)
+
+### WidgetData
+
+`WidgetData`
 
 ### WidgetFoo
 
