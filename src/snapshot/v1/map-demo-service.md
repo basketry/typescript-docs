@@ -67,11 +67,21 @@ Returns: [&lt;AllMaps&gt;](#allmaps)
 
 Has validation rules on the map key
 
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+
 ### ComplexKeyMapB
 
 `ComplexKeyMapB`
 
 Uses an enum as the map key
+
+#### Map Properties
+
+- Keys: [&lt;KeyEnum&gt;](#keyenum)
+- Values: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
 
 ### MixedMapA
 
@@ -82,6 +92,11 @@ Has no required map keys
 - `objId` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
 - `objName` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;ExampleMapValue&gt;](#examplemapvalue)
+
 ### MixedMapB
 
 `MixedMapB`
@@ -90,6 +105,11 @@ Has required map keys
 
 - `objId` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
 - `objName` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
+
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;ExampleMapValue&gt;](#examplemapvalue)
 
 ### MixedMapC
 
@@ -100,6 +120,11 @@ Has required map keys and max properties GREATER THAN the number of required pro
 - `objId` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
 - `objName` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;ExampleMapValue&gt;](#examplemapvalue)
+
 ### MixedMapD
 
 `MixedMapD`
@@ -109,11 +134,21 @@ Has required map keys and max properties EQUAL TO the number of required props a
 - `objId` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
 - `objName` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;ExampleMapValue&gt;](#examplemapvalue)
+
 ### PureMapA
 
 `PureMapA`
 
 Has no required map keys
+
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;ExampleMapValue&gt;](#examplemapvalue)
 
 ### PureMapB
 
@@ -121,14 +156,29 @@ Has no required map keys
 
 Has required map keys
 
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;ExampleMapValue&gt;](#examplemapvalue)
+
 ### PureMapC
 
 `PureMapC`
 
 Has required map keys and max properties GREATER THAN the number of required keys
 
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;ExampleMapValue&gt;](#examplemapvalue)
+
 ### PureMapD
 
 `PureMapD`
 
 Has required map keys and max properties EQUAL TO the number of required keys
+
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;ExampleMapValue&gt;](#examplemapvalue)

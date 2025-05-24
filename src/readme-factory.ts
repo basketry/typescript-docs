@@ -2,17 +2,16 @@ import {
   Enum,
   File,
   Generator,
-  getEnumByName,
-  getTypeByName,
+  getUnionByName,
   Interface,
   isRequired,
   Method,
   Parameter,
   Property,
   ReturnType,
-  Rule,
   Service,
   Type,
+  TypedValue,
   ValidationRule,
   warning,
 } from 'basketry';
@@ -22,16 +21,14 @@ import { from } from '@basketry/typescript/lib/utils';
 
 import { NamespacedTypescriptOptions } from '@basketry/typescript/lib/types';
 import {
-  // buildEnumNamespace,
   buildInterfaceName,
   buildMethodName,
   buildParameterName,
   buildPropertyName,
   buildTypeName,
-  // buildTypeNamespace,
 } from '@basketry/typescript/lib/name-factory';
 import { buildInterfaceDocsFilepath } from './name-factory';
-import { buildMethodParams } from '@basketry/typescript/lib/interface-factory';
+import { InterfaceInfo } from './interface-info';
 
 export const generateDocs: Generator = (
   service,
@@ -69,71 +66,16 @@ class Builder {
   }
 
   private types(int: Interface): Type[] {
-    const foundTypes = new Set<Type>();
-
-    for (const method of int.methods) {
-      for (const param of method.parameters) {
-        if (!param.isPrimitive) {
-          const paramType = getTypeByName(this.service, param.typeName.value);
-          if (!paramType) continue;
-          for (const foundType of traverseType(this.service, paramType)) {
-            foundTypes.add(foundType);
-          }
-        }
-      }
-
-      if (method.returnType && !method.returnType.isPrimitive) {
-        const returnType = getTypeByName(
-          this.service,
-          method.returnType.typeName.value,
-        );
-
-        if (returnType) {
-          for (const foundType of traverseType(this.service, returnType)) {
-            foundTypes.add(foundType);
-          }
-        }
-      }
-    }
-
-    return Array.from(foundTypes).sort((a, b) =>
+    const interfaceInfo = new InterfaceInfo(this.service, int);
+    return Array.from(interfaceInfo.types).sort((a, b) =>
       a.name.value.localeCompare(b.name.value),
     );
   }
 
   private enums(int: Interface): Enum[] {
-    const foundEnums = new Set<Enum>();
+    const interfaceInfo = new InterfaceInfo(this.service, int);
 
-    for (const method of int.methods) {
-      for (const param of method.parameters) {
-        if (!param.isPrimitive) {
-          const paramEnum = getEnumByName(this.service, param.typeName.value);
-          if (paramEnum) foundEnums.add(paramEnum);
-        }
-      }
-
-      if (method.returnType && !method.returnType.isPrimitive) {
-        const returnEnum = getEnumByName(
-          this.service,
-          method.returnType.typeName.value,
-        );
-
-        if (returnEnum) {
-          foundEnums.add(returnEnum);
-        }
-      }
-    }
-
-    for (const type of this.types(int)) {
-      for (const prop of type.properties) {
-        if (!prop.isPrimitive) {
-          const paramEnum = getEnumByName(this.service, prop.typeName.value);
-          if (paramEnum) foundEnums.add(paramEnum);
-        }
-      }
-    }
-
-    return Array.from(foundEnums).sort((a, b) =>
+    return Array.from(interfaceInfo.enums).sort((a, b) =>
       a.name.value.localeCompare(b.name.value),
     );
   }
@@ -302,8 +244,17 @@ class Builder {
   }
 
   private buildLinkedTypeName(
-    param: Parameter | Property | ReturnType,
+    param: Parameter | Property | ReturnType | TypedValue,
   ): string {
+    const union = getUnionByName(this.service, param.typeName.value);
+    if (union) {
+      const members = union.members
+        .map((m: TypedValue) => this.buildLinkedTypeName(m))
+        .join(' | ');
+
+      return param.isArray ? `(${members})[]` : members;
+    }
+
     const typeName = this.buildTypeName(param, true);
 
     if (param.isPrimitive) {
@@ -391,6 +342,13 @@ class Builder {
         yield* this.buildProperty(prop);
       }
     }
+    if (type.mapProperties) {
+      yield '';
+      yield `#### Map Properties`;
+      yield '';
+      yield `- Keys: ${this.buildLinkedTypeName(type.mapProperties.key)}`;
+      yield `- Values: ${this.buildLinkedTypeName(type.mapProperties.value)}`;
+    }
     yield '';
   }
 
@@ -429,18 +387,10 @@ class Builder {
   }
 
   private buildTypeName(
-    type: Parameter | Property | ReturnType,
+    type: Parameter | Property | ReturnType | TypedValue,
     skipArrayify: boolean = false,
   ): string {
-    const fullyQualifiedName = buildTypeName(
-      type,
-      //   {
-      //   type,
-      //   service: this.service,
-      //   options: this.options,
-      //   skipArrayify,
-      // }
-    );
+    const fullyQualifiedName = buildTypeName(type);
 
     if (fullyQualifiedName.endsWith('[]') && skipArrayify) {
       return fullyQualifiedName.substring(0, fullyQualifiedName.length - 2);
@@ -454,18 +404,6 @@ function sortParameters(parameters: Parameter[]): Parameter[] {
   return [...parameters].sort((a, b) =>
     a.name.value.localeCompare(b.name.value),
   );
-}
-
-function* traverseType(service: Service, type: Type): Iterable<Type> {
-  yield type;
-
-  for (const prop of type.properties) {
-    if (!prop.isPrimitive) {
-      const subtype = getTypeByName(service, prop.typeName.value);
-      if (subtype) yield* traverseType(service, subtype);
-      // TODO: traverse unions
-    }
-  }
 }
 
 function anchor(name: string): string {
