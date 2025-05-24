@@ -80,6 +80,11 @@ Returns: [&lt;Gizmo&gt;](#gizmo)
 - `name` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 - `size` [&lt;ProductSize&gt;](#productsize) (optional)
 
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;GizmoMapValue&gt;](#gizmomapvalue)
+
 ### GizmosResponse
 
 `GizmosResponse`

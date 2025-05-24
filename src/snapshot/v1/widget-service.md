@@ -97,6 +97,11 @@ Returns: [&lt;Widget&gt;](#widget)
 
 `WidgetData`
 
+#### Map Properties
+
+- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- Values: [&lt;GizmoMapValue&gt;](#gizmomapvalue)
+
 ### WidgetFoo
 
 `WidgetFoo`
