@@ -12,6 +12,6 @@ export function buildInterfaceDocsFilepath(
 ): string[] {
   return [
     `v${service.majorVersion.value}`,
-    `${kebab(buildInterfaceName(int))}.md`,
+    `${kebab(buildInterfaceName(int, undefined, options))}.md`,
   ];
 }
