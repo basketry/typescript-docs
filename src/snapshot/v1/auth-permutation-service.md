@@ -9,7 +9,7 @@ To make changes to the contents of this file:
 2. Run the Basketry CLI
 
 About Basketry: https://basketry.io
-About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#readme
+About @basketry/typescript-docs: https://basketry.io/docs/components/@basketry/typescript-docs
 --->
 
 # Auth Permutation Service
