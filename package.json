@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/basketry/typescript-docs/issues"
   },
-  "homepage": "https://github.com/basketry/typescript-docs#readme",
+  "homepage": "https://basketry.io/docs/components/@basketry/typescript-docs",
   "funding": "https://github.com/sponsors/basketry",
   "devDependencies": {
     "@types/jest": "^29.5.12",
