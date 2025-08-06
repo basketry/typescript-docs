@@ -92,14 +92,14 @@ export class InterfaceInfo {
   private init(): void {
     for (const method of this.int.methods) {
       for (const param of method.parameters) {
-        for (const t of this.traverse(param.typeName.value, 'input')) {
+        for (const t of this.traverse(param.value.typeName.value, 'input')) {
           // noop
         }
       }
 
-      if (method.returnType && !method.returnType.isPrimitive) {
+      if (method.returns?.value.kind === 'ComplexValue') {
         for (const t of this.traverse(
-          method.returnType.typeName.value,
+          method.returns.value.typeName.value,
           'output',
         )) {
           // noop
@@ -132,8 +132,8 @@ export class InterfaceInfo {
       yield type;
 
       for (const prop of type.properties) {
-        if (!prop.isPrimitive) {
-          yield* this.traverse(prop.typeName.value, mode);
+        if (prop.value.kind === 'ComplexValue') {
+          yield* this.traverse(prop.value.typeName.value, mode);
         }
       }
     } else if (union) {
