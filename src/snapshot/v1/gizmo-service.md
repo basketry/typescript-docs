@@ -14,16 +14,13 @@ About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#rea
 
 # Gizmo Service
 
-Single paragraph description
-
 - Methods
   - [createGizmo](#creategizmo)
   - [getGizmos](#getgizmos)
   - [updateGizmo](#updategizmo)
-  - [uploadGizmo](#uploadgizmo)
 - Types
+  - [GetGizmosResponse](#getgizmosresponse)
   - [Gizmo](#gizmo)
-  - [GizmosResponse](#gizmosresponse)
 - Enums
   - [CreateGizmoSize](#creategizmosize)
   - [ProductSize](#productsize)
@@ -48,7 +45,7 @@ Has a description in addition to a summary
 
 - `search` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 
-Returns: [&lt;GizmosResponse&gt;](#gizmosresponse)
+Returns: [&lt;GetGizmosResponse&gt;](#getgizmosresponse)
 
 Only has a summary
 
@@ -63,13 +60,13 @@ Only has a summary
 
 Returns: [&lt;Gizmo&gt;](#gizmo)
 
-### uploadGizmo
-
-`uploadGizmo({data})`
-
-- `data` &lt;Blob&gt;
-
 ## Types
+
+### GetGizmosResponse
+
+`GetGizmosResponse`
+
+- `data` [&lt;Gizmo[]&gt;](#gizmo) (optional)
 
 ### Gizmo
 
@@ -79,17 +76,6 @@ Returns: [&lt;Gizmo&gt;](#gizmo)
   - Max length: `30`
 - `name` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 - `size` [&lt;ProductSize&gt;](#productsize) (optional)
-
-#### Map Properties
-
-- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
-- Values: [&lt;GizmoMapValue&gt;](#gizmomapvalue)
-
-### GizmosResponse
-
-`GizmosResponse`
-
-- `data` [&lt;Gizmo[]&gt;](#gizmo)
 
 ## Enums
 

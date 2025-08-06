@@ -5,13 +5,13 @@ import {
   getUnionByName,
   Interface,
   isRequired,
+  MemberValue,
   Method,
   Parameter,
   Property,
-  ReturnType,
+  ReturnValue,
   Service,
   Type,
-  TypedValue,
   ValidationRule,
   warning,
 } from 'basketry';
@@ -160,32 +160,33 @@ class Builder {
         yield* this.buildParameter(param);
       }
     }
-    if (method.returnType) {
+    if (method.returns) {
       yield '';
-      yield `Returns: ${this.buildLinkedTypeName(method.returnType)}${
-        method.returnType.isArray ? '[]' : ''
+      yield `Returns: ${this.buildLinkedTypeName(method.returns)}${
+        method.returns.value.isArray ? '[]' : ''
       }`;
     }
-    if (Array.isArray(method.description)) {
+    if (method.description) {
       for (const line of method.description) {
         yield '';
         yield line.value;
       }
-    } else if (method.description) {
-      yield '';
-      yield method.description.value;
     }
     yield '';
   }
 
   private buildMethodDefinition(method: Method): string {
-    const hasRequiredParams = !!method.parameters.find(isRequired);
+    const hasRequiredParams = !!method.parameters.find((p) =>
+      isRequired(p.value),
+    );
 
     const parameters = method.parameters.length
       ? `({${sortParameters(method.parameters)
           .map(
             (param) =>
-              `${buildParameterName(param)}${isRequired(param) ? '' : '?'}`,
+              `${buildParameterName(param)}${
+                isRequired(param.value) ? '' : '?'
+              }`,
           )
           .join(', ')}}${hasRequiredParams ? '' : ' | undefined'})`
       : '';
@@ -196,47 +197,47 @@ class Builder {
   private *buildParameter(param: Parameter): Iterable<string> {
     yield `- \`${buildParameterName(param)}\` ${this.buildLinkedTypeName(
       param,
-    )}${isRequired(param) ? '' : ' (optional)'}${this.buildParameterDescription(
-      param,
-    )}`;
+    )}${
+      isRequired(param.value) ? '' : ' (optional)'
+    }${this.buildParameterDescription(param)}`;
 
-    yield* this.buildRules(param.rules);
+    yield* this.buildRules(param.value.rules);
   }
 
   private *buildRules(rules: Iterable<ValidationRule>): Iterable<string> {
     for (const rule of rules) {
       switch (rule.id) {
-        case 'array-max-items':
+        case 'ArrayMaxItems':
           yield `  - Max array length: \`${rule.max.value}\``;
           break;
-        case 'array-min-items':
+        case 'ArrayMinItems':
           yield `  - Min array length: \`${rule.min.value}\``;
           break;
-        case 'array-unique-items':
+        case 'ArrayUniqueItems':
           yield `  - Values must be unique`;
           break;
-        case 'number-gt':
+        case 'NumberGT':
           yield `  - Must be greater than \`${rule.value.value}\``;
           break;
-        case 'number-gte':
+        case 'NumberGTE':
           yield `  - Must be greater than or equal to \`${rule.value.value}\``;
           break;
-        case 'number-lt':
+        case 'NumberLT':
           yield `  - Must be less than \`${rule.value.value}\``;
           break;
-        case 'number-lte':
+        case 'NumberLTE':
           yield `  - Must be less than or equal to \`${rule.value.value}\``;
           break;
-        case 'number-multiple-of':
+        case 'NumberMultipleOf':
           yield `  - Must be a multiple of \`${rule.value.value}\``;
           break;
-        case 'string-max-length':
+        case 'StringMaxLength':
           yield `  - Max length: \`${rule.length.value}\``;
           break;
-        case 'string-min-length':
+        case 'StringMinLength':
           yield `  - Min length: \`${rule.length.value}\``;
           break;
-        case 'string-pattern':
+        case 'StringPattern':
           yield `  - Must match pattern: \`${rule.pattern.value}\``;
           break;
       }
@@ -244,22 +245,23 @@ class Builder {
   }
 
   private buildLinkedTypeName(
-    param: Parameter | Property | ReturnType | TypedValue,
+    param: Parameter | Property | ReturnValue | MemberValue,
   ): string {
-    const union = getUnionByName(this.service, param.typeName.value);
+    const memberValue = getMemberValue(param);
+    const union = getUnionByName(this.service, memberValue.typeName.value);
     if (union) {
       const members = union.members
-        .map((m: TypedValue) => this.buildLinkedTypeName(m))
+        .map((m: MemberValue) => this.buildLinkedTypeName(m))
         .join(' | ');
 
-      return param.isArray ? `(${members})[]` : members;
+      return memberValue.isArray ? `(${members})[]` : members;
     }
 
     const typeName = this.buildTypeName(param, true);
 
-    if (param.isPrimitive) {
+    if (memberValue.kind === 'PrimitiveValue') {
       let uri: string | undefined = undefined;
-      switch (param.typeName.value) {
+      switch (memberValue.typeName.value) {
         case 'string':
           uri =
             'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type';
@@ -288,12 +290,14 @@ class Builder {
       }
 
       if (uri) {
-        return `[&lt;${typeName}${param.isArray ? '[]' : ''}&gt;](${uri})`;
+        return `[&lt;${typeName}${
+          memberValue.isArray ? '[]' : ''
+        }&gt;](${uri})`;
       } else {
-        return `&lt;${typeName}${param.isArray ? '[]' : ''}&gt;`;
+        return `&lt;${typeName}${memberValue.isArray ? '[]' : ''}&gt;`;
       }
     } else {
-      return `[&lt;${typeName}${param.isArray ? '[]' : ''}&gt;](${anchor(
+      return `[&lt;${typeName}${memberValue.isArray ? '[]' : ''}&gt;](${anchor(
         typeName,
       )})`;
     }
@@ -301,14 +305,11 @@ class Builder {
 
   private *buildInterfaceDescription(int: Interface): Iterable<string> {
     if (int.description) {
-      if (Array.isArray(int.description)) {
+      if (int.description) {
         for (const para of int.description) {
           yield para.value;
           yield '';
         }
-      } else {
-        yield int.description.value;
-        yield '';
       }
     }
   }
@@ -316,11 +317,7 @@ class Builder {
   private buildParameterDescription(param: Parameter | Property): string {
     if (!param.description) return '';
 
-    if (Array.isArray(param.description)) {
-      return ` - ${param.description.map((line) => line.value).join(' ')}`;
-    }
-
-    return ` - ${param.description.value}`;
+    return ` - ${param.description.map((line) => line.value).join(' ')}`;
   }
 
   private *buildTypeDocs(type: Type): Iterable<string> {
@@ -332,9 +329,6 @@ class Builder {
         yield '';
         yield line.value;
       }
-    } else if (type.description) {
-      yield '';
-      yield type.description.value;
     }
     if (type.properties.length) {
       yield '';
@@ -346,18 +340,20 @@ class Builder {
       yield '';
       yield `#### Map Properties`;
       yield '';
-      yield `- Keys: ${this.buildLinkedTypeName(type.mapProperties.key)}`;
-      yield `- Values: ${this.buildLinkedTypeName(type.mapProperties.value)}`;
+      yield `- Keys: ${this.buildLinkedTypeName(type.mapProperties.key.value)}`;
+      yield `- Values: ${this.buildLinkedTypeName(
+        type.mapProperties.value.value,
+      )}`;
     }
     yield '';
   }
 
   private *buildProperty(prop: Property): Iterable<string> {
     yield `- \`${buildPropertyName(prop)}\` ${this.buildLinkedTypeName(prop)}${
-      isRequired(prop) ? '' : ' (optional)'
+      isRequired(prop.value) ? '' : ' (optional)'
     }${this.buildParameterDescription(prop)}`;
 
-    yield* this.buildRules(prop.rules);
+    yield* this.buildRules(prop.value.rules);
   }
 
   private *buildEnumDocs(e: Enum): Iterable<string> {
@@ -374,11 +370,11 @@ class Builder {
       yield '';
       yield description;
     }
-    if (e.values.length) {
+    if (e.members.length) {
       yield '';
-      for (const value of e.values) {
-        const valueDescription = valueDescriptions?.[value.content.value];
-        yield `- \`${value.content.value}\`${
+      for (const member of e.members) {
+        const valueDescription = valueDescriptions?.[member.content.value];
+        yield `- \`${member.content.value}\`${
           valueDescription ? ` - ${valueDescription}` : ''
         }`;
       }
@@ -387,10 +383,10 @@ class Builder {
   }
 
   private buildTypeName(
-    type: Parameter | Property | ReturnType | TypedValue,
+    type: Parameter | Property | ReturnValue | MemberValue,
     skipArrayify: boolean = false,
   ): string {
-    const fullyQualifiedName = buildTypeName(type);
+    const fullyQualifiedName = buildTypeName(getMemberValue(type));
 
     if (fullyQualifiedName.endsWith('[]') && skipArrayify) {
       return fullyQualifiedName.substring(0, fullyQualifiedName.length - 2);
@@ -408,4 +404,12 @@ function sortParameters(parameters: Parameter[]): Parameter[] {
 
 function anchor(name: string): string {
   return `#${name.toLocaleLowerCase().split(' ').join('-')}`;
+}
+
+function getMemberValue(
+  node: Parameter | Property | ReturnValue | MemberValue,
+): MemberValue {
+  return node.kind === 'ComplexValue' || node.kind === 'PrimitiveValue'
+    ? node
+    : node.value;
 }

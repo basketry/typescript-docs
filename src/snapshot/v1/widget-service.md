@@ -14,10 +14,6 @@ About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#rea
 
 # Widget Service
 
-First paragraph of a multi-paragraph description
-
-Second paragraph of a multi-paragraph description
-
 - Methods
   - [createWidget](#createwidget)
   - [deleteWidgetFoo](#deletewidgetfoo)
@@ -25,9 +21,8 @@ Second paragraph of a multi-paragraph description
   - [getWidgets](#getwidgets)
   - [putWidget](#putwidget)
 - Types
-  - [CreateWidgetBody](#createwidgetbody)
+  - [CreateWidgetString](#createwidgetstring)
   - [Widget](#widget)
-  - [WidgetData](#widgetdata)
   - [WidgetFoo](#widgetfoo)
 - Enums
   - [ProductSize](#productsize)
@@ -36,22 +31,22 @@ Second paragraph of a multi-paragraph description
 
 ### createWidget
 
-`createWidget({body?} | undefined)`
+`createWidget({string?} | undefined)`
 
-- `body` [&lt;CreateWidgetBody&gt;](#createwidgetbody) (optional) - The new widget
+- `string` [&lt;CreateWidgetString&gt;](#createwidgetstring) (optional) - The new widget
 
 ### deleteWidgetFoo
 
-`deleteWidgetFoo({id})`
+`deleteWidgetFoo({id?} | undefined)`
 
-- `id` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) - The widget ID
+- `id` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional) - The widget ID
   - Max length: `30`
 
 ### getWidgetFoo
 
-`getWidgetFoo({id})`
+`getWidgetFoo({id?} | undefined)`
 
-- `id` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) - The widget ID
+- `id` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional) - The widget ID
   - Max length: `30`
 
 Returns: [&lt;Widget&gt;](#widget)
@@ -68,22 +63,22 @@ Returns: [&lt;Widget&gt;](#widget)
 
 ## Types
 
-### CreateWidgetBody
+### CreateWidgetString
 
-`CreateWidgetBody`
+`CreateWidgetString`
 
-- `name` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- `name` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 
 ### Widget
 
 `Widget`
 
-- `id` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
+- `id` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
   - Max length: `30`
 - `name` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
   - Max length: `30`
   - Must match pattern: `[0-9a-fA-F]+`
-- `fiz` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type)
+- `fiz` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) (optional)
   - Must be a multiple of `3`
 - `buzz` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) (optional)
   - Must be a multiple of `5`
@@ -91,23 +86,13 @@ Returns: [&lt;Widget&gt;](#widget)
   - Must be a multiple of `15`
 - `foo` [&lt;WidgetFoo&gt;](#widgetfoo) (optional)
 - `size` [&lt;ProductSize&gt;](#productsize) (optional)
-- `data` [&lt;WidgetData&gt;](#widgetdata)
-
-### WidgetData
-
-`WidgetData`
-
-#### Map Properties
-
-- Keys: [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type)
-- Values: [&lt;GizmoMapValue&gt;](#gizmomapvalue)
 
 ### WidgetFoo
 
 `WidgetFoo`
 
-- `fiz` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) (optional)
-- `buzz` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type)
+- `fiz` [&lt;123456&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) (optional)
+- `buzz` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) (optional)
 
 ## Enums
 

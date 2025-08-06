@@ -18,7 +18,7 @@ About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#rea
   - [exhaustiveFormats](#exhaustiveformats)
   - [exhaustiveParams](#exhaustiveparams)
 - Types
-  - [ExhaustiveParamsBody](#exhaustiveparamsbody)
+  - [ExhaustiveParamsString](#exhaustiveparamsstring)
 - Enums
   - [ExhaustiveParamsHeaderEnum](#exhaustiveparamsheaderenum)
   - [ExhaustiveParamsHeaderEnumArray](#exhaustiveparamsheaderenumarray)
@@ -45,9 +45,8 @@ About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#rea
 
 ### exhaustiveParams
 
-`exhaustiveParams({body?, headerBoolean?, headerBooleanArray?, headerEnum?, headerEnumArray?, headerInteger?, headerIntegerArray?, headerNumber?, headerNumberArray?, headerString?, headerStringArray?, pathBoolean, pathBooleanArray, pathEnum, pathEnumArray, pathInteger, pathIntegerArray, pathNumber, pathNumberArray, pathString, pathStringArray, queryBoolean?, queryBooleanArray?, queryEnum?, queryEnumArray?, queryInteger?, queryIntegerArray?, queryNumber?, queryNumberArray?, queryString?, queryStringArray?})`
+`exhaustiveParams({headerBoolean?, headerBooleanArray?, headerEnum?, headerEnumArray?, headerInteger?, headerIntegerArray?, headerNumber?, headerNumberArray?, headerString?, headerStringArray?, pathBoolean, pathBooleanArray, pathEnum?, pathEnumArray?, pathInteger, pathIntegerArray, pathNumber, pathNumberArray, pathString, pathStringArray, queryBoolean?, queryBooleanArray?, queryEnum?, queryEnumArray?, queryInteger?, queryIntegerArray?, queryNumber?, queryNumberArray?, queryString?, queryStringArray?, string?})`
 
-- `body` [&lt;ExhaustiveParamsBody&gt;](#exhaustiveparamsbody) (optional)
 - `headerBoolean` [&lt;boolean&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#boolean_type) (optional)
 - `headerBooleanArray` [&lt;boolean[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#boolean_type) (optional)
 - `headerEnum` [&lt;ExhaustiveParamsHeaderEnum&gt;](#exhaustiveparamsheaderenum) (optional)
@@ -60,8 +59,8 @@ About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#rea
 - `headerStringArray` [&lt;string[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 - `pathBoolean` [&lt;boolean&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#boolean_type)
 - `pathBooleanArray` [&lt;boolean[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#boolean_type)
-- `pathEnum` [&lt;ExhaustiveParamsPathEnum&gt;](#exhaustiveparamspathenum)
-- `pathEnumArray` [&lt;ExhaustiveParamsPathEnumArray[]&gt;](#exhaustiveparamspathenumarray)
+- `pathEnum` [&lt;ExhaustiveParamsPathEnum&gt;](#exhaustiveparamspathenum) (optional)
+- `pathEnumArray` [&lt;ExhaustiveParamsPathEnumArray[]&gt;](#exhaustiveparamspathenumarray) (optional)
 - `pathInteger` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type)
 - `pathIntegerArray` [&lt;number[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type)
 - `pathNumber` [&lt;number&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type)
@@ -78,12 +77,13 @@ About @basketry/typescript-docs: https://github.com/basketry/typescript-docs#rea
 - `queryNumberArray` [&lt;number[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#number_type) (optional)
 - `queryString` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 - `queryStringArray` [&lt;string[]&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
+- `string` [&lt;ExhaustiveParamsString&gt;](#exhaustiveparamsstring) (optional)
 
 ## Types
 
-### ExhaustiveParamsBody
+### ExhaustiveParamsString
 
-`ExhaustiveParamsBody`
+`ExhaustiveParamsString`
 
 - `foo` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
 - `bar` [&lt;string&gt;](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#string_type) (optional)
