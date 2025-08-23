@@ -1,6 +1,6 @@
 {
   "name": "@basketry/typescript-docs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Basketry generator for documenting services that have a Typescript language target.",
   "main": "./lib/index.js",
   "bin": {
