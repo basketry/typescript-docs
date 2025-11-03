@@ -94,7 +94,7 @@ class Builder {
 
     yield* this.warning();
     yield '';
-    yield `# ${title(buildInterfaceName(int))}`;
+    yield `# ${title(buildInterfaceName(int, undefined, this.options))}`;
     yield '';
     yield* this.buildInterfaceDescription(int);
     yield* this.buildToc(int);
