@@ -1,4 +1,4 @@
-import { Engine, File } from 'basketry';
+import { NodeEngine, File } from 'basketry';
 import { generateDocs } from '../readme-factory';
 import { NamespacedTypescriptOptions } from '@basketry/typescript/lib/types';
 
@@ -11,7 +11,7 @@ export async function* generateFiles(): AsyncIterable<File> {
 
   const options: NamespacedTypescriptOptions = {};
 
-  const { engines } = await Engine.load({
+  const { engines } = await NodeEngine.load({
     sourcePath: 'source/path.ext',
     sourceContent: JSON.stringify(service),
     parser: (x) => ({ service: JSON.parse(x), violations: [] }),

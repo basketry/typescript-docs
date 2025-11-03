@@ -1,8 +1,11 @@
 {
   "name": "@basketry/typescript-docs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Basketry generator for documenting services that have a Typescript language target.",
   "main": "./lib/index.js",
+  "bin": {
+    "basketry-typescript-docs": "./lib/rpc.js"
+  },
   "scripts": {
     "test": "jest",
     "clean": "run-s -s clean:*",
@@ -13,6 +16,7 @@
     "start": "node ./lib/index.js",
     "prebuild": "run-s -s clean lint",
     "build": "tsc",
+    "postbuild": "chmod +x ./lib/rpc.js",
     "lint:eslint": "eslint src/**/*.*",
     "fix:eslint": "eslint --fix src/**/*.*",
     "lint:prettier": "prettier -c .",
@@ -49,8 +53,8 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@basketry/typescript": "^0.2.1",
-    "basketry": "^0.2.0",
+    "@basketry/typescript": "^0.2.3",
+    "basketry": "^0.2.1",
     "case": "^1.6.3",
     "prettier": "^2.5.1"
   }
